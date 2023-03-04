@@ -1,0 +1,8 @@
+Since BitBucket uses the commit hash as part of the URL, the endpoint for loading the model changes with each commit
+This page will be updated every time there is a commit
+
+model-1:
+
+COMMIT HASH = '87f4d5b96e8fa910c6afcc9c2eec149d16f95e21'
+REPOSITORY URL = 'https://bitbucket.org/gesture-detection-model/gesture-detection/src/main/'
+MODEL URL = 'https://bitbucket.org/gesture-detection-model/gesture-detection/raw/87f4d5b96e8fa910c6afcc9c2eec149d16f95e21/tfjs-1/model.json'
