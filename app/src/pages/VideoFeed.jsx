@@ -23,8 +23,8 @@ const VideoFeed = () => {
   const modelRef = useRef();
 
   const [prediction, setPrediction] = useState('None');
-  const [model, setModel] = useState(null);
-  const {getPrediction, modelConfig} = useContext(ModelContext);
+  const [frames, setFrames] = useState(0);
+  const {getPrediction} = useContext(ModelContext);
 
   useEffect(() => {
 
@@ -42,7 +42,7 @@ const VideoFeed = () => {
       // croppedContext.drawImage(results.image, 0, 0, croppedCanvas.width, croppedCanvas.height);
       // console.log(results.image);
       //const img = "asdfk";
-      let x = results.image;
+      // let x = results.image;
     
       if (results.multiHandLandmarks) {
         for (const landmarks_ of results.multiHandLandmarks) {
@@ -60,19 +60,22 @@ const VideoFeed = () => {
           const yMax = landmarks.reduce((max, landmark) => (landmark.y > max ? landmark.y : max), -Infinity);
           const handWidth = xMax - xMin;
           const handHeight = yMax - yMin;
-          // croppedCanvas.width = handWidth;
-          // croppedCanvas.height = handHeight;
-          // console.log(xMin-handWidth*0.1, yMin - handHeight * 0.1,handWidth * 1.2, handHeight * 1.2, handWidth, handHeight );
+          
           // pre.innerText = `(xMin-handWidth*0.1 : ${(xMin-handWidth*0.1)*1000},\nyMin - handHeight * 0.1 : ${(yMin - handHeight * 0.1)*1000},\nhandWidth * 1.2 : ${(handWidth * 1.2)*1000},\nhandHeight * 1.2 : ${(handHeight * 1.2)*1000},\nhandWidth*1000 : ${handWidth*1000},\nhandHeight*1000 : ${handHeight*1000}`;
           let wid_d, ht_d;
           if(handWidth<200) wid_d = parseInt((200 - handWidth)/2)
           if(handHeight<250) ht_d = parseInt((250 - handHeight)/2)
           
-          
-          croppedContext.drawImage(
-            x,
+          console.log(results.image,
             xMin-wid_d, yMin-ht_d,
             xMax+wid_d, yMax+ht_d,
+            handWidth * 2.5*1000,
+            handHeight * 2*1000);
+
+          croppedContext.drawImage(
+            results.image,
+            (xMin + 0.7*handWidth)*1000,
+            (yMin - 1.2*handHeight)*1000,
             handWidth * 2.5*1000,
             handHeight * 2*1000,
             0,
@@ -83,9 +86,12 @@ const VideoFeed = () => {
           const croppedImage = croppedCanvasRef.current.toDataURL();
           // console.log(croppedCanvasRef.current);
           imgRef.current.src = croppedImage;
-          const prediction = await getPrediction(croppedCanvasRef.current, modelRef.current);
-          console.log(prediction);
-          setPrediction(prediction);
+          if(frames % 2 == 0){
+            const prediction = await getPrediction(croppedCanvasRef.current, modelRef.current);
+            console.log(prediction);
+            setPrediction(prediction);
+          }
+          setFrames(x => x+1);
 
         }
       }
@@ -99,7 +105,7 @@ const VideoFeed = () => {
 
     const canvasCtx = canvasRef.current.getContext('2d');
     const croppedContext = croppedCanvasRef.current.getContext("2d");
-    console.log(modelConfig)
+    // console.log(modelConfig)
 
 
     const hands = new Hands({locateFile: (file) => {
@@ -128,9 +134,9 @@ const VideoFeed = () => {
   return (
     <>
       <div className="container">
-        <video ref={videoRef} className="input_video" ></video>
-        <canvas ref={canvasRef} className="output_canvas" width="1280px" height="720px"></canvas>
-        <canvas ref = {croppedCanvasRef} className="cropped_canvas" width="190px" height="256px" ></canvas>
+        <video ref={videoRef} className="input_video" style={{display : 'none'}}></video>
+        <canvas ref={canvasRef} className="output_canvas" width="1280px" height="720px" style={{display : 'none'}}></canvas>
+        <canvas ref = {croppedCanvasRef} className="cropped_canvas" width="190px" height="256px" style={{display : 'none'}}></canvas>
         <pre ref={preRef} id="landmarks">{prediction}</pre>
         <img ref = {imgRef} className="cropped-img" alt="cropped-img"/>
     </div>
