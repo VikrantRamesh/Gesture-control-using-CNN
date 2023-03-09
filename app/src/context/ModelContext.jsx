@@ -37,28 +37,28 @@ const ModelProvider = ({ children }) => {
 
     // Load the image from the provided image source.
     const img = await tf.browser.fromPixels(imageSrc);
+    console.log(img);
 
     // Convert the image to grayscale.
-    const grayscale = img.mean(2);
+    const grayscale = img.mean(2).toFloat();
 
-    // Add an extra dimension to represent the single color channel.
-    let final = grayscale.expandDims(0);
-    final = final.expandDims(3);
-
-    // Resize the grayscale image to (32, 32).
-    const resized = tf.image.resizeBilinear(final, [32, 32]);
-
+    
 
     // Normalize the pixel values to be between 0 and 1.
-    const normalized = resized.div(255);
+    // const normalized = dim.div(255);
 
-    // const predictions = await modelConfig.model.predict(normalized).dataSync();
-    // const prediction = gestures[tf.argMax(predictions).dataSync()];
-    // console.log(tf.argMax(predictions).dataSync(), prediction);
-    // return prediction;
+    // Add an extra dimension to represent the single color channel.
+    let dim = grayscale.expandDims(2);
+    dim = dim.expandDims(0);
+
+    // Resize the grayscale image to (32, 32).
+    const resized = tf.image.resizeBilinear(dim, [32, 32]);
+
+
+
 
     return new Promise((resolve, reject) => {
-      model.predict(normalized)
+      model.predict(resized)
       .data()
       .then(predictions => {
         const prediction = gestures[tf.argMax(predictions).dataSync()];

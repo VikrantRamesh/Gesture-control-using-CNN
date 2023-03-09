@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/control_utils/control_utils.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils/drawing_utils.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+  <div class="container">
+    <video class="input_video"></video>
+    <canvas class="output_canvas" width="1280px" height="720px"></canvas>
+    <canvas class="cropped_canvas" width="190px" height="256px"></canvas>
+    <pre id="landmarks"></pre>
+    <pre id="hand_connections"></pre>
+    <img class="cropped-img" alt="cropped-img"/>
+  </div>
+
+  <script type="module">
+    const videoElement = document.getElementsByClassName('input_video')[0];
+    const canvasElement = document.getElementsByClassName('output_canvas')[0];
+    const croppedCanvas = document.getElementsByClassName('cropped_canvas')[0];
+    const pre = document.getElementById("landmarks");
+    const canvasCtx = canvasElement.getContext('2d');
+    const croppedContext = croppedCanvas.getContext("2d");
+    
+    function onResults(results) {
+      canvasCtx.save();
+      canvasCtx.clearRect(0, 0, canvasElement.width, canvasElement.height);
+      canvasCtx.drawImage(results.image, 0, 0, canvasElement.width, canvasElement.height);
+      // croppedContext.drawImage(results.image, 0, 0, croppedCanvas.width, croppedCanvas.height);
+      // console.log(results.image);
+      //const img = "asdfk";
+      let x = results.image;
+      console.log(x);
+    
+      if (results.multiHandLandmarks) {
+        for (const landmarks_ of results.multiHandLandmarks) {
+          drawConnectors(canvasCtx, landmarks_, HAND_CONNECTIONS,
+                         {color: '#00FF00', lineWidth: 5});
+          drawLandmarks(canvasCtx, landmarks_, {color: '#FF0000', lineWidth: 2});
+        }
+    
+        if(results.multiHandLandmarks.length){
+          const landmarks = results.multiHandLandmarks[0];
+          // console.log(landmarks);
+          const xMin = landmarks.reduce((min, landmark) => (landmark.x < min ? landmark.x : min), Infinity);
+          const xMax = landmarks.reduce((max, landmark) => (landmark.x > max ? landmark.x : max), -Infinity);
+          const yMin = landmarks.reduce((min, landmark) => (landmark.y < min ? landmark.y : min), Infinity);
+          const yMax = landmarks.reduce((max, landmark) => (landmark.y > max ? landmark.y : max), -Infinity);
+          const handWidth = xMax - xMin;
+          const handHeight = yMax - yMin;
+          // croppedCanvas.width = handWidth;
+          // croppedCanvas.height = handHeight;
+          console.log(xMin-handWidth*0.1, yMin - handHeight * 0.1,handWidth * 1.2, handHeight * 1.2, handWidth, handHeight );
+          pre.innerText = `(xMin-handWidth*0.1 : ${(xMin-handWidth*0.1)*1000},\nyMin - handHeight * 0.1 : ${(yMin - handHeight * 0.1)*1000},\nhandWidth * 1.2 : ${(handWidth * 1.2)*1000},\nhandHeight * 1.2 : ${(handHeight * 1.2)*1000},\nhandWidth*1000 : ${handWidth*1000},\nhandHeight*1000 : ${handHeight*1000}`;
+          croppedContext.drawImage(
+            x,
+            (xMin + 0.7*handWidth)*1000,
+            (yMin - handHeight)*1000,
+            handWidth * 2.3*1000,
+            handHeight * 2*1000,
+            0,
+            0,
+            190,
+            256
+          );
+          const croppedImage = croppedCanvas.toDataURL();
+          // console.log(croppedCanvas);
+          document.querySelector(".cropped-img").src = croppedImage;
+        }
+      }
+      
+    
+    
+          canvasCtx.restore();
+    }
+    
+    const hands = new Hands({locateFile: (file) => {
+      return `https://cdn.jsdelivr.net/npm/@mediapipe/hands/${file}`;
+    }});
+    hands.setOptions({
+      maxNumHands: 2,
+      modelComplexity: 1,
+      minDetectionConfidence: 0.5,
+      minTrackingConfidence: 0.5
+    });
+    hands.onResults(onResults);
+    
+    const camera = new Camera(videoElement, {
+      onFrame: async () => {
+        await hands.send({image: videoElement});
+      },
+      width: 1280,
+      height: 720
+    });
+    camera.start();
+    document.getElementById("hand_connections").innerText = HAND_CONNECTIONS;
+    </script>
+
+</body>
+</html>
+

@@ -5,7 +5,8 @@ import { drawConnectors, drawLandmarks } from "@mediapipe/drawing_utils";
 import { ModelContext } from "../context/ModelContext";
 import * as tf from '@tensorflow/tfjs'
 
-const HAND_CONNECTIONS = [  [0, 1], [1, 2], [2, 3], [3, 4], // Thumb
+const HAND_CONNECTIONS = [
+  [0, 1], [1, 2], [2, 3], [3, 4], // Thumb
   [0, 5], [5, 6], [6, 7], [7, 8], // Index finger
   [0, 9], [9, 10], [10, 11], [11, 12], // Middle finger
   [0, 13], [13, 14], [14, 15], [15, 16], // Ring finger
@@ -31,7 +32,6 @@ const VideoFeed = () => {
     const fetchModel = async() => {
       const MODEL_URL = 'https://bitbucket.org/gesture-detection-model/gesture-detection/raw/87f4d5b96e8fa910c6afcc9c2eec149d16f95e21/tfjs-1/model.json'
       const modelFetched = await tf.loadLayersModel(MODEL_URL);
-      console.log(modelFetched)
       modelRef.current = modelFetched;
     }
 
@@ -53,42 +53,44 @@ const VideoFeed = () => {
     
         if(results.multiHandLandmarks.length){
           const landmarks = results.multiHandLandmarks[0];
-          console.log(landmarks);
+         
           const xMin = landmarks.reduce((min, landmark) => (landmark.x < min ? landmark.x : min), Infinity);
           const xMax = landmarks.reduce((max, landmark) => (landmark.x > max ? landmark.x : max), -Infinity);
           const yMin = landmarks.reduce((min, landmark) => (landmark.y < min ? landmark.y : min), Infinity);
           const yMax = landmarks.reduce((max, landmark) => (landmark.y > max ? landmark.y : max), -Infinity);
-          const handWidth = xMax - xMin;
           const handHeight = yMax - yMin;
+          const handWidth = xMax - xMin;
+          
+          
           
           // pre.innerText = `(xMin-handWidth*0.1 : ${(xMin-handWidth*0.1)*1000},\nyMin - handHeight * 0.1 : ${(yMin - handHeight * 0.1)*1000},\nhandWidth * 1.2 : ${(handWidth * 1.2)*1000},\nhandHeight * 1.2 : ${(handHeight * 1.2)*1000},\nhandWidth*1000 : ${handWidth*1000},\nhandHeight*1000 : ${handHeight*1000}`;
           let wid_d, ht_d;
           if(handWidth<200) wid_d = parseInt((200 - handWidth)/2)
-          if(handHeight<250) ht_d = parseInt((250 - handHeight)/2)
+          if(handHeight<300) ht_d = parseInt((250 - handHeight)/2)
           
-          console.log(results.image,
-            xMin-wid_d, yMin-ht_d,
-            xMax+wid_d, yMax+ht_d,
-            handWidth * 2.5*1000,
-            handHeight * 2*1000);
-
           croppedContext.drawImage(
             results.image,
-            (xMin + 0.7*handWidth)*1000,
-            (yMin - 1.2*handHeight)*1000,
-            handWidth * 2.5*1000,
-            handHeight * 2*1000,
+            (xMin)*1280 - wid_d,
+            (yMin)*720 - ht_d,
+            (handWidth *1280 + 1.2*wid_d),
+            (handHeight *720 + 1.2*ht_d),
             0,
             0,
             190,
             256
           );
+
+
+
+          // console.log(handWidth,handHeight);
+          // console.log(iheight,iwidth);
+
+          
           const croppedImage = croppedCanvasRef.current.toDataURL();
           // console.log(croppedCanvasRef.current);
           imgRef.current.src = croppedImage;
           if(frames % 2 == 0){
             const prediction = await getPrediction(croppedCanvasRef.current, modelRef.current);
-            console.log(prediction);
             setPrediction(prediction);
           }
           setFrames(x => x+1);
@@ -134,9 +136,9 @@ const VideoFeed = () => {
   return (
     <>
       <div className="container">
-        <video ref={videoRef} className="input_video" style={{display : 'none'}}></video>
-        <canvas ref={canvasRef} className="output_canvas" width="1280px" height="720px" style={{display : 'none'}}></canvas>
-        <canvas ref = {croppedCanvasRef} className="cropped_canvas" width="190px" height="256px" style={{display : 'none'}}></canvas>
+        <video ref={videoRef} className="input_video"></video>
+        <canvas ref={canvasRef} className="output_canvas" width="1280px" height="720px" ></canvas>
+        <canvas ref = {croppedCanvasRef} className="cropped_canvas" height={'380'} width={'256'}></canvas>
         <pre ref={preRef} id="landmarks">{prediction}</pre>
         <img ref = {imgRef} className="cropped-img" alt="cropped-img"/>
     </div>
