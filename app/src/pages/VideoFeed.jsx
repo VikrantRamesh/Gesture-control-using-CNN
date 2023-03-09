@@ -72,15 +72,15 @@ const VideoFeed = () => {
             results.image,
             (xMin)*1280 - wid_d,
             (yMin)*720 - ht_d,
-            (handWidth *1280 + 1.2*wid_d),
-            (handHeight *720 + 1.2*ht_d),
+            (handWidth *1280 + 2*wid_d),
+            (handHeight *720 + 2*ht_d),
             0,
             0,
             190,
             256
           );
 
-
+          croppedContext.scale(-1, 1);
 
           // console.log(handWidth,handHeight);
           // console.log(iheight,iwidth);
@@ -89,9 +89,10 @@ const VideoFeed = () => {
           const croppedImage = croppedCanvasRef.current.toDataURL();
           // console.log(croppedCanvasRef.current);
           imgRef.current.src = croppedImage;
+          const prediction = await getPrediction(croppedCanvasRef.current, modelRef.current);
           if(frames % 2 == 0){
-            const prediction = await getPrediction(croppedCanvasRef.current, modelRef.current);
             setPrediction(prediction);
+            // const prediction = await getPrediction(croppedCanvasRef.current, modelRef.current);
           }
           setFrames(x => x+1);
 
@@ -138,9 +139,9 @@ const VideoFeed = () => {
       <div className="container">
         <video ref={videoRef} className="input_video"></video>
         <canvas ref={canvasRef} className="output_canvas" width="1280px" height="720px" ></canvas>
-        <canvas ref = {croppedCanvasRef} className="cropped_canvas" height={'380'} width={'256'}></canvas>
+        <canvas ref = {croppedCanvasRef} className="cropped_canvas" height={'256'} width={'190'}></canvas>
         <pre ref={preRef} id="landmarks">{prediction}</pre>
-        <img ref = {imgRef} className="cropped-img" alt="cropped-img"/>
+        <img ref = {imgRef} className="cropped-img" height={'256'} width={'190'} alt="cropped-img"/>
     </div>
     </>
   );
