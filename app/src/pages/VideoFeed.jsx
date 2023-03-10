@@ -77,10 +77,10 @@ const VideoFeed = () => {
             0,
             0,
             190,
-            256
+            256,
           );
 
-          croppedContext.scale(-1, 1);
+          // croppedContext.scale(-1, 1);
 
           // console.log(handWidth,handHeight);
           // console.log(iheight,iwidth);

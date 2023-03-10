@@ -39,10 +39,14 @@ const ModelProvider = ({ children }) => {
     let img = await tf.browser.fromPixels(imageSrc);
     console.log(img.shape);
     console.log(img);
+
+    // Flip the image
+    let flipped = tf.image.flipLeftRight(img.expandDims(0).toFloat());
+    flipped = tf.squeeze(flipped);
     
 
     // Convert the image to grayscale.
-    const grayscale = img.mean(2).toFloat();
+    const grayscale = flipped.mean(2).toFloat();
 
     
 
