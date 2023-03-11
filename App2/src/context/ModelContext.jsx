@@ -12,11 +12,11 @@ const ModelProvider = ({ children }) => {
 
 
   const updateModelConfig = (config) => {
-
+    //console.log(config);
     setModelConfig((prevState) => {
       return { ...prevState, ...config };
     });
- 
+    //console.log(config);
   };
 
   const loadModel = async() => {
@@ -26,39 +26,46 @@ const ModelProvider = ({ children }) => {
   }
 
   const getPrediction = async(imageSrc, model) => {
+    //console.log("Hello")
+    // console.log(model);
     
     if (!model) {
       return null;
     }
+    //console.log("World")
 
 
     // Load the image from the provided image source.
-    const img = await tf.browser.fromPixels(imageSrc);
+    let img = await tf.browser.fromPixels(imageSrc);
+    //console.log(img.shape);
+    //console.log(img);
+
+    // Flip the image
+    let flipped = tf.image.flipLeftRight(img.expandDims(0).toFloat());
+    flipped = tf.squeeze(flipped);
+    
 
     // Convert the image to grayscale.
-    const grayscale = img.mean(2);
+    const grayscale = flipped.mean(2).toFloat();
 
-    // Add an extra dimension to represent the single color channel.
-    let final = grayscale.expandDims(0);
-    final = final.expandDims(3);
+    
+
+  
+    let dim = grayscale.expandDims(2);
+    dim = dim.expandDims(0)
 
     // Resize the grayscale image to (32, 32).
-    const resized = tf.image.resizeBilinear(final, [32, 32]);
+    const resized = tf.image.resizeBilinear(dim, [32, 32]);
 
 
-    // Normalize the pixel values to be between 0 and 1.
-    const normalized = resized.div(255);
 
-    // const predictions = await modelConfig.model.predict(normalized).dataSync();
-    // const prediction = gestures[tf.argMax(predictions).dataSync()];
-    // console.log(tf.argMax(predictions).dataSync(), prediction);
-    // return prediction;
 
     return new Promise((resolve, reject) => {
-      model.predict(normalized)
+      model.predict(resized)
       .data()
       .then(predictions => {
         const prediction = gestures[tf.argMax(predictions).dataSync()];
+        // console.log(tf.argMax(predictions).dataSync(), prediction);
         resolve(prediction);
       })
       .catch(error => {
@@ -76,6 +83,7 @@ const ModelProvider = ({ children }) => {
     loadModel: loadModel
   };
 
+  //console.log(modelProperties)
 
   return (
     <ModelContext.Provider value={modelProperties}>
