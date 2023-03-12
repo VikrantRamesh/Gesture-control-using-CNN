@@ -6,6 +6,7 @@ import { ModelContext } from "../context/ModelContext";
 import { motion } from 'framer-motion';
 import * as tf from '@tensorflow/tfjs';
 import '../App.css';
+import ReactTestUtils from 'react-dom/test-utils';
 
 const HAND_CONNECTIONS = [
   [0, 1], [1, 2], [2, 3], [3, 4], // Thumb
@@ -24,6 +25,7 @@ const VideoFeed = () => {
   const imgRef = useRef();
   const preRef = useRef();
   const modelRef = useRef();
+  const buttonRef = useRef(); 
 
   const [prediction, setPrediction] = useState('None');
   const [frames, setFrames] = useState(0);
@@ -34,7 +36,7 @@ const VideoFeed = () => {
   const {getPrediction} = useContext(ModelContext);
 
   useEffect(() => {
-
+    let lclick = 0;
     const fetchModel = async() => {
       const MODEL_URL = 'https://bitbucket.org/gesture-detection-model/gesture-detection/raw/87f4d5b96e8fa910c6afcc9c2eec149d16f95e21/tfjs-1/model.json'
       const modelFetched = await tf.loadLayersModel(MODEL_URL);
@@ -101,7 +103,6 @@ const VideoFeed = () => {
               // const prediction = await getPrediction(croppedCanvasRef.current, modelRef.current);
               
               
-            
               if(prediction !== gesture.gest){
               
                       //repeating if-elseif-else block that sets the prediction that continously occurs for 30 frames to be the current gesture
@@ -137,38 +138,58 @@ const VideoFeed = () => {
                             pivot.y = yMax*720
                             setPivot({...pivot});
                           }
+                          if(gesture.gest == 'Left Click'){
+                              lclick = 1;
+                          }
                       }
               }
-
-              //console.log(gesture.gest);
-              //setGesture({time: 0});                
-              if(gesture.gest == 'Index'){
+              if(gesture.gest === 'Index'){
                
                 let x_new = variants.default.x - 1.75*(xMin*1280-pivot.x);
                 let y_new = variants.default.y +    1.5*(yMax*720-pivot.y);
 
                 
 
-                  if(x_new>=windowSize.current[0]){
-                      x_new = windowSize.current[0];
-                  }
-                  if(y_new>=windowSize.current[1]){
-                    y_new = windowSize.current[1];
-                  }
+                  // if(x_new>=windowSize.current[0]){
+                  //     x_new = windowSize.current[0];
+                  // }
+                  // if(y_new>=windowSize.current[1]){
+                  //   y_new = windowSize.current[1];
+                  // }
 
-                  console.log(pivot.x, xMin*1280, x_new);
+                  //console.log(pivot.x, xMin*1280, x_new);
 
                   mousepos.x = x_new;
                   mousepos.y = y_new;
                   setMousepos({...mousepos})
-                  console.log('success');
+                  console.log(mousepos);
+              }
+              
+              else if(gesture.gest === 'Left Click'){
+                if (lclick === 1 && buttonRef.current) {
+                  console.log('yes');
+                  /// ADD CODE FOR MOUSE CLICK
+                  const event = new MouseEvent("click", {
+                    bubbles: true,
+                    cancelable: true,
+                    view: window,
+                  });
+                  const elements = document.elementFromPoint(variants.default.x,variants.default.y+80);
+                  const ele = elements.getElementsByClassName("clickable");
+                  console.log(lclick);
+                  const elementArray = Array.from(ele);
+                  elementArray.forEach((element) => {
+                    element.click();
+                  });
+                  lclick = 0;
+                }
               }
 
-          }
-          setFrames(x => x+1);
+            }
+            setFrames(x => x+1);
 
+          }
         }
-      }
       
     
     
@@ -205,6 +226,16 @@ const VideoFeed = () => {
    
   }, []);
 
+
+
+    const [isOpen, setIsOpen] = useState(false);
+  
+    const toggleMenu = () => {
+      setIsOpen(!isOpen);
+    }
+
+
+
   const variants = {
     default: {
         x: mousepos.x,
@@ -212,13 +243,24 @@ const VideoFeed = () => {
     }
   }
 
-
   return (
     <>
-      <motion.div className = 'cursor' variants = {variants} animate='default'  transition={{
-        x: { type: "spring", stiffness: 100 },
-      }}></motion.div>
-      <div className="container ">
+      <motion.div ref={buttonRef} className = 'cursor' variants = {variants} animate="default" transition={{
+                    duration: 0,
+                }}><div id = 'cursor'></div></motion.div>
+
+      <div className="container">
+
+        <button onClick={toggleMenu} className="clickable">Open Menu</button>
+        {isOpen && (
+        <div className="menu">
+          <ul>
+            <li>Menu Item 1</li>
+            <li>Menu Item 2</li>
+            <li>Menu Item 3</li>
+          </ul>
+        </div>
+      )}
         
         <video ref={videoRef} className="input_video" style={{display:'none'} }></video>
         <canvas ref={canvasRef} className="output_canvas"  style={{display:'none'}} width="1280px" height="720px" ></canvas>
