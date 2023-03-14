@@ -6,7 +6,20 @@ import index from '../Images/Index.jpg';
 import L from '../Images/L.jpg';
 import Stone from '../Images/Stone.jpg';
 
+
 const Slide1 = () => {
+
+
+
+  const collection = document.getElementsByClassName('rec-arrow');
+  
+  const myElements = Array.from(collection);
+  myElements.forEach((element) => {
+        element.classList.add("clickable");
+  });
+
+
+
   return (
     <div class = 'bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 slide  background-animate'>
         <div class="h-104 grid grid-cols-2 gap-6 content-start place-items-center align-top">
@@ -51,34 +64,42 @@ const Slide1 = () => {
 };
 
 const Slide2 = () => {
+  function triggerHover(e) {
+    e.target.classList.add('text-slate-800');
+  }
+  function  DetriggerHover(e){
+    e.target.classList.remove('text-slate-800');
+  }
+
   return (
-    <div class = 'slide bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 p-6 background-animate'>
+    <div class = 'slide bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 p-6 background-animate '>
 
         <div class=' ml-16 p-4'>
-            <h1 class="text-fuchsia-50 font-sans text-5xl hover:text-6xl font-bold	text-center hover:text-slate-800 transition-colors">
+            <h1 onMouseOver={triggerHover} onMouseOut={DetriggerHover} class="text-fuchsia-50 hoverable font-sans text-5xl hover:text-6xl font-bold	text-center hover:text-slate-800 transition-colors">
               Yay! You did it!
             </h1>
         </div>
 
-        <div class="h-104 grid grid-cols-2 gap-1 content-start place-items-center align-top">
+        <div class="h-104 grid grid-cols-2 hoverable gap-1 content-start place-items-center align-top">
 
           <div class=' ml-16 p-8 '>
-            <h1 class="text-fuchsia-50 font-sans text-4xl text-center font-semibold place-content-center hover:text-slate-800 hover:text-5xl transition-all">
+            <h1 onMouseOver={triggerHover} onMouseOut={DetriggerHover} class="text-fuchsia-50 hoverable font-sans text-4xl text-center font-semibold place-content-center hover:text-slate-800 hover:text-5xl transition-all">
               Now use your Index Finger to control the cursor.
             </h1>
-            <div class='items-center flex justify-center mt-4 border-8 mx-24  hover:border-slate-800 transition-all'>
+            <div class='items-center flex hoverable justify-center mt-4 border-8 mx-24  hover:border-slate-800 transition-all'>
             <img src= {index} height = '300' width = '200' class=' animate-wave'></img> 
             </div>
           </div>
           
           <div class=' p-2'>
-            <h2 class="text-fuchsia-50 text-left font-sans text-5xl font-medium place-content-center mx-20  hover:text-slate-800 hover:text-6xl transition-all">Use Palm and go to next slide ➜</h2>
+            <h2 className="text-fuchsia-50 hoverable text-left font-sans text-5xl font-medium place-content-center mx-20  hover:text-slate-800 hover:text-6xl transition-all"
+             onMouseOver={triggerHover} onMouseOut={DetriggerHover}>Use Palm and go to next slide ➜</h2>
           </div>
         </div>
 
         <hr class="w-52 h-1 mx-auto  bg-gray-100 border-0 rounded"></hr>
     <div class=' ml-16 p-10 '>
-    <h1 class="text-fuchsia-50 font-sans text-5xl font-bold	text-center hover:text-slate-800 hover:text-6xl transition-all mb-12">
+    <h1 onMouseOver={triggerHover} onMouseOut={DetriggerHover} class="text-fuchsia-50 hoverable font-sans text-5xl font-bold	text-center hover:text-slate-800 hover:text-6xl transition-all mb-12">
       Get Comfortable...There is more coming!
     </h1>
     </div>
