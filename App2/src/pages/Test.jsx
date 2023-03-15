@@ -16,6 +16,7 @@ const Test = () => {
         const loadModel = async() => {
             const model = await tf.loadLayersModel(MODEL_URL);
             updateModelConfig({isLoaded : true, model: model})
+            console.log(modelConfig.model);
         }
 
         loadModel();

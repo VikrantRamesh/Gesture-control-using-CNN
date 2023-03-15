@@ -7,7 +7,6 @@ const Tips = () => {
                 e.target.classList.add('shadow-lg','mx-11', 'my-6');
         }
         function  DetriggerHover(e){
-                console.log('njsdkasjnsajkndkjasndkasnkdnasja');
                 e.target.classList.remove('shadow-lg','mx-11', 'my-6');
         }
 

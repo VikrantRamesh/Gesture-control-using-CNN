@@ -1,7 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-@import url('https://fonts.googleapis.com/css2?family=Dosis:wght@600&display=swap');
+/* @import url('https://fonts.googleapis.com/css2?family=Dosis:wght@600&display=swap'); */
 
 body {
   margin: 0;
@@ -68,7 +68,7 @@ code {
 .dcYvsJ {
   border-radius: 2px !important;
   width: 20px !important;
-  //height: 12px !important;
+  /* height: 12px !important; */
   border: 2px !important;
   box-shadow: none !important;
   background-color: white !important;
@@ -78,12 +78,12 @@ code {
 
 
 .slide{
-  //display: flex;
-  //justify-content: center;
+  /* //display: flex; */
+  /* //justify-content: center; */
   align-items: center;
   height: 44rem;
   width: 100%;
-  //background-color: #ff8b3d;
+  /* //background-color: #ff8b3d; */
   color: #fff;
   margin: 0 0px;
   font-size: 4em;

@@ -12,11 +12,11 @@ const ModelProvider = ({ children }) => {
 
 
   const updateModelConfig = (config) => {
-    //console.log(config);
+    console.log(config);
     setModelConfig((prevState) => {
       return { ...prevState, ...config };
     });
-    //console.log(config);
+    console.log(config);
   };
 
   const loadModel = async() => {
@@ -26,19 +26,19 @@ const ModelProvider = ({ children }) => {
   }
 
   const getPrediction = async(imageSrc, model) => {
-    //console.log("Hello")
+    // console.log("Hello")
     // console.log(model);
     
     if (!model) {
       return null;
     }
-    //console.log("World")
+    // console.log("World")
 
 
     // Load the image from the provided image source.
     let img = await tf.browser.fromPixels(imageSrc);
-    //console.log(img.shape);
-    //console.log(img);
+    // console.log(img.shape);
+    // console.log(img);
 
     // Flip the image
     let flipped = tf.image.flipLeftRight(img.expandDims(0).toFloat());
@@ -83,7 +83,6 @@ const ModelProvider = ({ children }) => {
     loadModel: loadModel
   };
 
-  //console.log(modelProperties)
 
   return (
     <ModelContext.Provider value={modelProperties}>
