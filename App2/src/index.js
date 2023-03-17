@@ -1,14 +1,14 @@
 import React, {useRef} from 'react';
 import ReactDOM from 'react-dom/client';
 import Crous from './Components/Carousel.jsx';
-import reportWebVitals from './reportWebVitals';
+// import reportWebVitals from './reportWebVitals';
 import Navbar from './Components/navbar.jsx';
 import App from './Components/App.jsx';
 import Tips from './Components/tips.jsx';
 import Tech from './Components/tech.jsx';
 import Footer from './Components/footer.jsx';
 import VideoFeed from './Components/Videofeed.jsx';
-import ModelProvider from './context/ModelContext'
+import ModelProvider from './context/ModelContext.jsx'
 import './styles/index.css';
 
 
