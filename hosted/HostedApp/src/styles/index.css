@@ -1,0 +1,595 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+/* @import url('https://fonts.googleapis.com/css2?family=Dosis:wght@600&display=swap'); */
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+.tech-bg{
+  height: 750px;
+}
+
+.hemi{
+  z-index:0;
+  right:15%;
+  margin: auto;
+  position: relative;
+  height:1000px;
+  width: 2000px;
+  top:-350px;
+  opacity:1;
+  background-color: #4ade80;
+  border-radius: 50%;
+}
+
+.rec.rec-arrow {
+  position:absolute;
+  z-index:1;
+  margin: none;
+  background-color: none;
+  outline: none;
+}
+
+.rec.rec-arrow:disabled {
+  visibility: hidden;
+}
+
+.rec.rec-arrow-right{
+  margin-left: 94%;
+}
+.rec.rec-arrow-left{
+  margin-left: 2%;
+}
+.hdvBkW{
+  margin:0 0px !important; 
+}
+.hSXdFa{
+  border-radius: 2px !important;
+  width: 60px !important;
+  border: 2px !important;
+}
+.hQSEcj {
+    margin-top:5px !important;
+    position: relative;
+    bottom:2.5rem;
+}
+.dcYvsJ {
+  border-radius: 2px !important;
+  width: 20px !important;
+  /* height: 12px !important; */
+  border: 2px !important;
+  box-shadow: none !important;
+  background-color: white !important;
+}
+
+
+
+
+.slide{
+  /* //display: flex; */
+  /* //justify-content: center; */
+  align-items: center;
+  height: 44rem;
+  width: 100%;
+  /* //background-color: #ff8b3d; */
+  color: #fff;
+  margin: 0 0px;
+  font-size: 4em;
+}
+
+.background-animate {
+    background-size: 400%;
+
+    -webkit-animation: AnimationName 5s ease infinite;
+    -moz-animation: AnimationName 5s ease infinite;
+    animation: AnimationName 5s ease infinite;
+  }
+
+  @keyframes AnimationName {
+    0%,
+    100% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+  }
+
+
+  .ball div {
+    position: absolute;
+    display:block;
+    border-radius: 35%;
+    background-color: #FFB6C1;
+    opacity:0.2;
+    bottom:-150px;
+    animation: float 25s linear infinite;
+  }
+
+  .ball div:nth-child(1) {
+    width: 30px;
+    height: 30px;
+    bottom:950px;
+    left: 50px;
+    animation-delay:0s;
+    animation-duration: 8s;
+  }
+
+  .ball div:nth-child(2){
+    width: 20px;
+    height: 20px;
+    bottom:950px;
+    left: 850px;
+    animation-delay:1s;
+    animation-duration: 10s;
+  }
+
+  .ball div:nth-child(3){
+    width: 50px;
+    height: 50px;
+    bottom:950px;
+    left: 320px;
+    animation-delay:2s;
+    animation-duration: 12s;
+    }
+    .ball div:nth-child(4){
+    width: 60px;
+    height: 60px;
+    bottom:950px;
+    left: 680px;
+    animation-delay:4s;
+    animation-duration: 15s;
+    }
+
+    .ball div:nth-child(5){
+    width: 40px;
+    height: 40px;
+    bottom:950px;
+    left:500px;
+    animation-delay:4.2s;
+    animation-duration: 20s;
+    }
+
+    .ball div:nth-child(6){
+    width: 100px;
+    height: 100px;
+    bottom:950px;
+    left: 1000px;
+    animation-delay:3.5s;
+    animation-duration: 6s;
+    }
+
+    .ball div:nth-child(7){
+    width: 30px;
+    height: 30px;
+    bottom:950px;
+    left: 900px;
+    animation-delay:5s;
+    animation-duration: 6s;
+    }
+
+
+    .ball div:nth-child(8){
+    width: 10px;
+    height: 10px;
+    bottom:950px;
+    left: 1200px;
+    animation-delay:6s;
+    animation-duration: 16s;
+    }
+    .ball div:nth-child(9){
+    width: 50px;
+    height: 50px;
+    bottom:900px;
+    left: 1350px;
+    animation-delay:0s;
+    animation-duration: 10s;
+    }
+
+
+
+
+
+  .ball2 div {
+    position: absolute;
+    display:block;
+    border-radius: 35%;
+    background-color: #FFB6C1;
+    opacity:0.2;
+    bottom:-150px;
+    animation: float 25s linear infinite;
+  }
+
+
+
+  .ball2 div:nth-child(1) {
+    width: 30px;
+    height: 30px;
+    bottom:950px;
+    left: 1550px;
+    animation-delay:0s;
+    animation-duration: 8s;
+  }
+
+  .ball2 div:nth-child(2){
+    width: 20px;
+    height: 20px;
+    bottom:950px;
+    left: 2350px;
+    animation-delay:1s;
+    animation-duration: 10s;
+  }
+
+  .ball2 div:nth-child(3){
+    width: 50px;
+    height: 50px;
+    bottom:950px;
+    left: 1820px;
+    animation-delay:2s;
+    animation-duration: 12s;
+    }
+    .ball2 div:nth-child(4){
+    width: 60px;
+    height: 60px;
+    bottom:950px;
+    left: 2180px;
+    animation-delay:4s;
+    animation-duration: 15s;
+    }
+
+    .ball2 div:nth-child(5){
+    width: 40px;
+    height: 40px;
+    bottom:950px;
+    left:2000px;
+    animation-delay:4.2s;
+    animation-duration: 20s;
+    }
+
+    .ball2 div:nth-child(6){
+    width: 100px;
+    height: 100px;
+    bottom:950px;
+    left: 2500px;
+    animation-delay:3.5s;
+    animation-duration: 6s;
+    }
+
+    .ball2 div:nth-child(7){
+    width: 30px;
+    height: 30px;
+    bottom:950px;
+    left: 2400px;
+    animation-delay:5s;
+    animation-duration: 6s;
+    }
+
+
+    .ball2 div:nth-child(8){
+    width: 10px;
+    height: 10px;
+    bottom:950px;
+    left: 2700px;
+    animation-delay:6s;
+    animation-duration: 16s;
+    }
+    .ball2 div:nth-child(9){
+    width: 50px;
+    height: 50px;
+    bottom:900px;
+    left: 2850px;
+    animation-delay:0s;
+    animation-duration: 10s;
+    }
+
+
+
+
+
+  .ball3 div {
+    position: absolute;
+    display:block;
+    border-radius: 35%;
+    background-color: #FFB6C1;
+    opacity:0.2;
+    bottom:-150px;
+    animation: float 25s linear infinite;
+  }
+
+
+
+  .ball3 div:nth-child(1) {
+    width: 30px;
+    height: 30px;
+    bottom:950px;
+    left: 3050px;
+    animation-delay:0s;
+    animation-duration: 8s;
+  }
+
+  .ball3 div:nth-child(2){
+    width: 20px;
+    height: 20px;
+    bottom:950px;
+    left: 3850px;
+    animation-delay:1s;
+    animation-duration: 10s;
+  }
+
+  .ball3 div:nth-child(3){
+    width: 50px;
+    height: 50px;
+    bottom:950px;
+    left: 1820px;
+    animation-delay:2s;
+    animation-duration: 12s;
+    }
+    .ball3 div:nth-child(4){
+    width: 60px;
+    height: 60px;
+    bottom:950px;
+    left: 3680px;
+    animation-delay:4s;
+    animation-duration: 15s;
+    }
+
+    .ball3 div:nth-child(5){
+    width: 40px;
+    height: 40px;
+    bottom:950px;
+    left:3500px;
+    animation-delay:4.2s;
+    animation-duration: 20s;
+    }
+
+    .ball3 div:nth-child(6){
+    width: 100px;
+    height: 100px;
+    bottom:950px;
+    left: 4000px;
+    animation-delay:3.5s;
+    animation-duration: 6s;
+    }
+
+    .ball3 div:nth-child(7){
+    width: 30px;
+    height: 30px;
+    bottom:950px;
+    left: 3900px;
+    animation-delay:5s;
+    animation-duration: 6s;
+    }
+
+
+    .ball3 div:nth-child(8){
+    width: 10px;
+    height: 10px;
+    bottom:950px;
+    left: 4200px;
+    animation-delay:6s;
+    animation-duration: 16s;
+    }
+    .ball3 div:nth-child(9){
+    width: 50px;
+    height: 50px;
+    bottom:900px;
+    left: 4350px;
+    animation-delay:0s;
+    animation-duration: 10s;
+    }
+
+
+  
+  
+  
+  .ball4 div {
+    position: absolute;
+    display:block;
+    border-radius: 35%;
+    background-color: #FFB6C1;
+    opacity:0.2;
+    bottom:-150px;
+    animation: float 25s linear infinite;
+  }
+
+
+
+  .ball4 div:nth-child(1) {
+    width: 30px;
+    height: 30px;
+    bottom:950px;
+    left: 4550px;
+    animation-delay:0s;
+    animation-duration: 8s;
+  }
+
+  .ball4 div:nth-child(2){
+    width: 20px;
+    height: 20px;
+    bottom:950px;
+    left: 5350px;
+    animation-delay:1s;
+    animation-duration: 10s;
+  }
+
+  .ball4 div:nth-child(3){
+    width: 50px;
+    height: 50px;
+    bottom:950px;
+    left: 3020px;
+    animation-delay:2s;
+    animation-duration: 12s;
+    }
+    .ball4 div:nth-child(4){
+    width: 60px;
+    height: 60px;
+    bottom:950px;
+    left: 4780px;
+    animation-delay:4s;
+    animation-duration: 15s;
+    }
+
+    .ball4 div:nth-child(5){
+    width: 40px;
+    height: 40px;
+    bottom:950px;
+    left:4500px;
+    animation-delay:4.2s;
+    animation-duration: 20s;
+    }
+
+    .ball4 div:nth-child(6){
+    width: 100px;
+    height: 100px;
+    bottom:950px;
+    left: 5200px;
+    animation-delay:3.5s;
+    animation-duration: 6s;
+    }
+
+    .ball4 div:nth-child(7){
+    width: 30px;
+    height: 30px;
+    bottom:950px;
+    left: 5500px;
+    animation-delay:5s;
+    animation-duration: 6s;
+    }
+
+
+    .ball4 div:nth-child(8){
+    width: 10px;
+    height: 10px;
+    bottom:950px;
+    left: 5700px;
+    animation-delay:6s;
+    animation-duration: 16s;
+    }
+    .ball4 div:nth-child(9){
+    width: 50px;
+    height: 50px;
+    bottom:900px;
+    left: 5850px;
+    animation-delay:0s;
+    animation-duration: 10s;
+    }
+
+
+
+
+
+    .ball5 div {
+    position: absolute;
+    display:block;
+    border-radius: 35%;
+    background-color: #FFB6C1;
+    opacity:0.2;
+    bottom:-150px;
+    animation: float 25s linear infinite;
+  }
+
+
+
+  .ball5 div:nth-child(1) {
+    width: 30px;
+    height: 30px;
+    bottom:950px;
+    left: 6050px;
+    animation-delay:0s;
+    animation-duration: 8s;
+  }
+
+  .ball5 div:nth-child(2){
+    width: 20px;
+    height: 20px;
+    bottom:950px;
+    left: 6850px;
+    animation-delay:1s;
+    animation-duration: 10s;
+  }
+
+  .ball5 div:nth-child(3){
+    width: 50px;
+    height: 50px;
+    bottom:950px;
+    left: 4520px;
+    animation-delay:2s;
+    animation-duration: 12s;
+    }
+    .ball5 div:nth-child(4){
+    width: 60px;
+    height: 60px;
+    bottom:950px;
+    left: 6280px;
+    animation-delay:4s;
+    animation-duration: 15s;
+    }
+
+    .ball5 div:nth-child(5){
+    width: 40px;
+    height: 40px;
+    bottom:950px;
+    left:6500px;
+    animation-delay:4.2s;
+    animation-duration: 20s;
+    }
+
+    .ball5 div:nth-child(6){
+    width: 100px;
+    height: 100px;
+    bottom:950px;
+    left: 6700px;
+    animation-delay:3.5s;
+    animation-duration: 6s;
+    }
+
+    .ball5 div:nth-child(7){
+    width: 30px;
+    height: 30px;
+    bottom:950px;
+    left: 7000px;
+    animation-delay:5s;
+    animation-duration: 6s;
+    }
+
+
+    .ball5 div:nth-child(8){
+    width: 10px;
+    height: 10px;
+    bottom:950px;
+    left: 7200px;
+    animation-delay:6s;
+    animation-duration: 16s;
+    }
+    .ball5 div:nth-child(9){
+    width: 50px;
+    height: 50px;
+    bottom:900px;
+    left: 7350px;
+    animation-delay:0s;
+    animation-duration: 10s;
+    }
+
+
+  @keyframes float {
+    0% {
+      opacity:0.4;
+      transform: translateY(1000px) rotate(0deg);
+    }
+    100% {
+      opacity: 0;
+      transform: translateY(500px) rotate(720deg);
+    }
+  }
